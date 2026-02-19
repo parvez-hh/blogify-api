@@ -1,12 +1,18 @@
-const http = require('http');
-
+const express = require('express');
+const app = express();
 const PORT = 3000;
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Blogify API is running!');
+// Import router
+const postRouter = require('./routes/posts.routes');
+
+// Welcome route
+app.get('/', (req, res) => {
+  res.send('Welcome to the Blogify API!');
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// Mount router
+app.use('/api/v1/posts', postRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
